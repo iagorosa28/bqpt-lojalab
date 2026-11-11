@@ -1,0 +1,61 @@
+# Dependências e armazenamento local do pnpm (em qualquer pacote)
+node_modules/
+.pnpm-store/
+
+# Ambientes locais e segredos; exemplos devem conter apenas valores fictícios
+.env
+.env.*
+!.env.example
+!.env.*.example
+!.env.sample
+!.env.*.sample
+!.env.template
+!.env.*.template
+
+# Logs e arquivos temporários de processos
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+*.pid
+*.pid.lock
+
+# Builds e metadados gerados pelo TypeScript e pelo Vite
+dist/
+build/
+*.tsbuildinfo
+.vite/
+.vite-temp/
+vite.config.*.timestamp-*
+
+# Caches locais de ferramentas
+.cache/
+.eslintcache
+.stylelintcache
+
+# Cobertura e resultados temporários de testes
+coverage/
+.nyc_output/
+.vitest/
+test-results/
+**/cypress/screenshots/
+**/cypress/videos/
+**/cypress/downloads/
+
+# Arquivos temporários do sistema operacional e de editores
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+.history/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/shelf/
+.idea/httpRequests/
+
+# Preservar orientações e arquivos necessários à reprodução do ambiente
+!AGENTS.md
+!pnpm-lock.yaml

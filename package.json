@@ -1,0 +1,12 @@
+
+{
+  "name": "bqpt-lojalab",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Monorepo de estudos do Banco Quem Poupa Tem e LojaLab",
+  "type": "module",
+  "packageManager": "pnpm@11.25.0",
+  "scripts": {
+    "workspace:list": "pnpm -r list --depth -1"
+  }
+}

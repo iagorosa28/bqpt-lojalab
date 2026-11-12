@@ -42,3 +42,7 @@ As aplicações serão adicionadas gradualmente na pasta `apps/`.
 
 **Observação:** os comandos para executar as aplicações
 serão documentados conforme elas forem desenvolvidas.
+
+## Aplicações
+
+- [API do Banco Quem Poupa Tem](apps/quem-poupa-tem-api/README.md): tecnologias, comandos, endpoint de saúde e teste HTTP.

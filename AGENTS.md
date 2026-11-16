@@ -39,6 +39,15 @@ arquitetura, testes, APIs e integração, desenvolvendo a autonomia técnica de 
 - Não antecipar mecanismos específicos de autenticação, versões exatas das
   ferramentas ou detalhes da API de pagamentos: essas decisões estão pendentes.
 
+## Planejamento e estudo inicial com ChatGPT
+
+- No planejamento, ChatGPT apresenta as pautas, pede a ideia inicial de Iago,
+  avalia criticamente a proposta e apresenta alternativas com suas justificativas.
+- Iago e ChatGPT definem o escopo e os critérios de aceite e registram os
+  requisitos no Jira.
+- O estudo inicial com ChatGPT é opcional. Quando realizado, utiliza exemplos
+  básicos em outros contextos e apresenta documentação oficial ao final.
+
 ## Responsabilidades de Iago
 
 Iago é o desenvolvedor e responsável por:
@@ -71,6 +80,8 @@ prontas.
 ### Atividades permitidas
 
 - Ler e analisar arquivos, código, diffs, mensagens de erro e resultados de testes.
+- Responder diretamente às dúvidas de Iago, explicar como fazer e apresentar
+  exemplos e alternativas, mantendo a implementação sob responsabilidade de Iago.
 - Sugerir comandos, explicando o que fazem; a execução e a validação dos testes
   cabem a Iago.
 - Fornecer exemplos de código na conversa com explicações didáticas.
@@ -95,8 +106,10 @@ Utilizar **`main` + branches temporárias por tarefa**, sem branch permanente `d
 1. Iago atualiza a `main` e cria uma branch própria para cada card de desenvolvimento.
 2. Preferir o nome de branch recomendado na descrição do card do Jira.
 3. Iago realiza commits durante ou ao final da implementação, conforme necessário.
-4. Após revisão e testes, Iago faz push e abre uma PR direcionada à `main`.
-5. ChatGPT realiza a revisão final da PR e coordena o merge quando aprovado.
+4. Após aprovação da revisão do Codex e validação local, Iago faz push, abre uma
+   PR direcionada à `main` e move o card para **Em Revisão**.
+5. ChatGPT realiza a revisão final da PR. Se aprovada, faz o merge e conclui o
+   card; se houver correções obrigatórias, devolve o card para **Em Desenvolvimento**.
 6. Após o merge, Iago atualiza a `main` local antes de iniciar outra tarefa.
 7. As branches temporárias podem ser removidas após a integração, preservando o
    histórico no Git.
@@ -150,19 +163,32 @@ Não executar o commit: essa ação é responsabilidade de Iago.
 O Jira é a referência para requisitos e andamento das tarefas. Projeto: **`BQPTLL`**.
 
 Status: **Backlog**, **Planejamento**, **A fazer**, **Em Desenvolvimento**,
-**Teste**, **Concluído** e **Descartado**.
+**Em Revisão**, **Concluído** e **Descartado**.
 
 Os cards de desenvolvimento devem conter uma recomendação de nome de branch.
 
-1. Iago e ChatGPT planejam a tarefa e registram seus requisitos no Jira.
-2. Iago cria a branch correspondente.
-3. Iago implementa a funcionalidade com orientação didática do Codex.
-4. Codex realiza o code review quando solicitado ou quando Iago informa a conclusão.
-5. Iago corrige os problemas e executa os testes necessários.
-6. Após a aprovação técnica, Codex recomenda a mensagem de commit.
-7. Iago realiza commit, push e abre uma PR para a `main`.
-8. ChatGPT realiza a revisão final da PR e, quando aprovada, coordena o merge.
-9. ChatGPT atualiza o Jira e os documentos de acompanhamento.
+1. ChatGPT apresenta as pautas de planejamento, pede a ideia inicial de Iago,
+   avalia criticamente e propõe alternativas. Ambos definem a tarefa e registram
+   seus requisitos e critérios de aceite no Jira.
+2. Iago pode realizar um estudo inicial opcional com ChatGPT, com exemplos
+   básicos em outros contextos e documentação oficial ao final.
+3. Iago cria a branch correspondente.
+4. Iago implementa a funcionalidade. Codex atua como professor e revisor,
+   respondendo diretamente às dúvidas e explicando como fazer, com exemplos e
+   alternativas.
+5. Codex realiza o code review quando solicitado ou quando Iago informa a conclusão.
+6. Iago corrige os problemas e executa e valida localmente os testes necessários.
+7. Após a aprovação técnica, Codex recomenda a mensagem de commit.
+8. Após aprovação da revisão do Codex e validação local, Iago realiza commit,
+   push, abre uma PR para a `main` e move o card para **Em Revisão**.
+9. ChatGPT realiza a revisão final da PR. Se aprovada, faz o merge e move o card
+   para **Concluído**. Se houver correções obrigatórias, devolve o card para
+   **Em Desenvolvimento**, para Iago corrigir e repetir a revisão e validação.
+10. ChatGPT atualiza o Jira e os documentos de acompanhamento.
+
+Pausas relevantes durante um card podem ser registradas no Jira pelo ChatGPT
+como checkpoints, com o estado atual, pendências e próximo passo, para facilitar
+a retomada.
 
 ## Versionamento e informações sensíveis
 

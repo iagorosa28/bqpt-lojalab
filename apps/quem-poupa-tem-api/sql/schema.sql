@@ -1,0 +1,1 @@
+-- As tabelas serão definidas gradualmente nas próximas funcionalidades.

@@ -38,11 +38,11 @@ pnpm run workspace:list
 
 O comando utiliza `pnpm -r list --depth -1` para exibir os projetos sem suas dependências.
 
-As aplicações serão adicionadas gradualmente na pasta `apps/`.
+As aplicações ficam na pasta `apps/`.
 
-**Observação:** os comandos para executar as aplicações
-serão documentados conforme elas forem desenvolvidas.
+**Observação:** os comandos e a preparação do ambiente de cada aplicação
+estão documentados em seu próprio README.
 
 ## Aplicações
 
-- [API do Banco Quem Poupa Tem](apps/quem-poupa-tem-api/README.md): tecnologias, comandos, endpoint de saúde e teste HTTP.
+- [API do Banco Quem Poupa Tem](apps/quem-poupa-tem-api/README.md): tecnologias, setup do PostgreSQL, configuração do ambiente, conexão, encerramento, comandos e verificações locais.

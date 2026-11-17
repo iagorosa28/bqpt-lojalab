@@ -46,3 +46,4 @@ estão documentados em seu próprio README.
 ## Aplicações
 
 - [API do Banco Quem Poupa Tem](apps/quem-poupa-tem-api/README.md): tecnologias, setup do PostgreSQL, configuração do ambiente, conexão, encerramento, comandos e verificações locais.
+- [Frontend do Banco Quem Poupa Tem](apps/quem-poupa-tem-web/README.md): React e Vite, execução local, proxy da API, estados da interface, comandos e verificações locais.

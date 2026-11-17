@@ -61,12 +61,12 @@ if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 
 Confira os valores e preencha `DB_PASSWORD` no `.env` com a senha local escolhida:
 
-| Variável | Valor do exemplo |
-| --- | --- |
-| `DB_HOST` | `localhost` |
-| `DB_PORT` | `5432` |
-| `DB_NAME` | `quem_poupa_tem_dev` |
-| `DB_USER` | `bqpt_app` |
+| Variável      | Valor do exemplo                         |
+| ------------- | ---------------------------------------- |
+| `DB_HOST`     | `localhost`                              |
+| `DB_PORT`     | `5432`                                   |
+| `DB_NAME`     | `quem_poupa_tem_dev`                     |
+| `DB_USER`     | `bqpt_app`                               |
 | `DB_PASSWORD` | Vazio; preencher apenas no `.env` local. |
 
 O `.env` é ignorado pelo Git. O `.env.example` é versionado sem senha.
@@ -88,13 +88,13 @@ o acesso pelo cliente `psql`; a API verifica seu próprio acesso ao iniciar.
 
 Na pasta `apps/quem-poupa-tem-api`, os comandos são:
 
-| Comando | Para que serve |
-| --- | --- |
-| `pnpm run dev` | Executa `src/server.ts` com tsx e reinicia ao detectar alterações. |
-| `pnpm run build` | Compila o TypeScript para JavaScript na pasta `dist`. |
-| `pnpm run start` | Executa `dist/server.js` com Node.js, após o build. |
-| `pnpm run typecheck` | Verifica os tipos de `src` e `tests` sem gerar arquivos JavaScript. |
-| `pnpm run test` | Executa os testes uma vez com Vitest. |
+| Comando               | Para que serve                                                       |
+| --------------------- | -------------------------------------------------------------------- |
+| `pnpm run dev`        | Executa `src/server.ts` com tsx e reinicia ao detectar alterações.   |
+| `pnpm run build`      | Compila o TypeScript para JavaScript na pasta `dist`.                |
+| `pnpm run start`      | Executa `dist/server.js` com Node.js, após o build.                  |
+| `pnpm run typecheck`  | Verifica os tipos de `src` e `tests` sem gerar arquivos JavaScript.  |
+| `pnpm run test`       | Executa os testes uma vez com Vitest.                                |
 | `pnpm run test:watch` | Mantém o Vitest aberto e reexecuta os testes ao detectar alterações. |
 
 ## Execução e endpoint de saúde
@@ -168,12 +168,12 @@ para compilar apenas `src`; a verificação de tipos usa
 Após o build, use `pnpm run start` para conferir os cenários abaixo, sem o
 reinício automático do modo de desenvolvimento:
 
-| Cenário | Resultado esperado |
-| --- | --- |
-| Banco disponível e porta HTTP livre | Consulta inicial funciona, HTTP inicia e `/health` responde `200`. |
-| Conexão inicial inválida | Erro é registrado, HTTP não inicia e processo termina com código `1`. |
-| Porta `3000` ocupada | Falha do HTTP é registrada, pool é encerrado e processo termina com código `1`. |
-| `Ctrl+C` após iniciar normalmente | `Servidor HTTP OFF!` aparece antes de `Pool OFF!`, sem mensagem de falha. |
+| Cenário                             | Resultado esperado                                                              |
+| ----------------------------------- | ------------------------------------------------------------------------------- |
+| Banco disponível e porta HTTP livre | Consulta inicial funciona, HTTP inicia e `/health` responde `200`.              |
+| Conexão inicial inválida            | Erro é registrado, HTTP não inicia e processo termina com código `1`.           |
+| Porta `3000` ocupada                | Falha do HTTP é registrada, pool é encerrado e processo termina com código `1`. |
+| `Ctrl+C` após iniciar normalmente   | `Servidor HTTP OFF!` aparece antes de `Pool OFF!`, sem mensagem de falha.       |
 
 Para simular uma conexão inválida, use temporariamente no `.env` uma porta
 local sem PostgreSQL e restaure o valor correto após a verificação. Para

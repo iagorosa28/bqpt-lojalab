@@ -1,4 +1,3 @@
-
 {
   "name": "bqpt-lojalab",
   "version": "0.1.0",
@@ -7,6 +6,11 @@
   "type": "module",
   "packageManager": "pnpm@11.25.0",
   "scripts": {
-    "workspace:list": "pnpm -r list --depth -1"
+    "workspace:list": "pnpm -r list --depth -1",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "3.10.1"
   }
 }

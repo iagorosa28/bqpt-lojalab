@@ -1,4 +1,5 @@
 # bqpt-lojalab
+
 Monorepo de estudos que reúne dois sistemas fictícios, Banco Quem Poupa Tem e LojaLab, desenvolvidos de forma independente e posteriormente integrados por APIs para simular pagamentos.
 
 ## Preparação do ambiente
@@ -43,6 +44,29 @@ As aplicações ficam na pasta `apps/`.
 **Observação:** os comandos e a preparação do ambiente de cada aplicação
 estão documentados em seu próprio README.
 
+### Formatação do código
+
+O monorepo utiliza Prettier como dependência de desenvolvimento da raiz.
+A configuração compartilhada em `.prettierrc.json` define indentação de
+dois espaços, sem caracteres de tabulação.
+
+Execute os comandos abaixo na raiz do repositório:
+
+| Comando             | Para que serve                                                            |
+| ------------------- | ------------------------------------------------------------------------- |
+| `pnpm format`       | Aplica a formatação aos arquivos compatíveis e não ignorados do monorepo. |
+| `pnpm format:check` | Confere a formatação sem modificar os arquivos.                           |
+
+O arquivo `.prettierignore` exclui builds, cobertura e `pnpm-lock.yaml` da
+formatação. O Prettier também ignora `node_modules` por padrão e, quando
+executado na raiz, respeita o `.gitignore` desse diretório.
+
+Depois de aplicar a formatação, confira o diff e execute `pnpm format:check`.
+Os comandos podem afetar arquivos de ambas as aplicações e a documentação.
+A formatação não substitui lint, verificação de tipos, build ou testes das
+aplicações afetadas.
+
 ## Aplicações
 
 - [API do Banco Quem Poupa Tem](apps/quem-poupa-tem-api/README.md): tecnologias, setup do PostgreSQL, configuração do ambiente, conexão, encerramento, comandos e verificações locais.
+- [Frontend do Banco Quem Poupa Tem](apps/quem-poupa-tem-web/README.md): React e Vite, execução local, proxy da API, estados da interface, comandos e verificações locais.

@@ -20,16 +20,16 @@ arquitetura, testes, APIs e integração, desenvolvendo a autonomia técnica de 
 
 ## Decisões técnicas aprovadas
 
-| Área | Decisão |
-| --- | --- |
-| Linguagem principal | TypeScript |
-| Organização | Monorepo com pnpm Workspaces |
-| Frontends independentes | React + Vite |
-| Backends independentes | Node.js + Express |
-| Banco de dados do BQPT | PostgreSQL com `pg`, SQL manual e consultas parametrizadas |
-| Banco de dados da LojaLab | MongoDB com Mongoose |
-| Testes unitários e de integração | Vitest e Supertest |
-| Testes de interface | Cypress, em uma etapa posterior |
+| Área                             | Decisão                                                    |
+| -------------------------------- | ---------------------------------------------------------- |
+| Linguagem principal              | TypeScript                                                 |
+| Organização                      | Monorepo com pnpm Workspaces                               |
+| Frontends independentes          | React + Vite                                               |
+| Backends independentes           | Node.js + Express                                          |
+| Banco de dados do BQPT           | PostgreSQL com `pg`, SQL manual e consultas parametrizadas |
+| Banco de dados da LojaLab        | MongoDB com Mongoose                                       |
+| Testes unitários e de integração | Vitest e Supertest                                         |
+| Testes de interface              | Cypress, em uma etapa posterior                            |
 
 - Organizar os backends por funcionalidades, com routes, controllers, services e
   repositories conforme a necessidade.
@@ -147,14 +147,14 @@ Sempre que uma revisão de código for aprovada:
 
 Preferir Conventional Commits quando apropriado:
 
-| Tipo | Uso |
-| --- | --- |
-| `feat` | Nova funcionalidade |
-| `fix` | Correção de problema |
-| `test` | Criação ou alteração de testes |
-| `refactor` | Reorganização sem alterar comportamento |
-| `docs` | Documentação |
-| `chore` | Manutenção, configuração ou tarefas auxiliares |
+| Tipo       | Uso                                            |
+| ---------- | ---------------------------------------------- |
+| `feat`     | Nova funcionalidade                            |
+| `fix`      | Correção de problema                           |
+| `test`     | Criação ou alteração de testes                 |
+| `refactor` | Reorganização sem alterar comportamento        |
+| `docs`     | Documentação                                   |
+| `chore`    | Manutenção, configuração ou tarefas auxiliares |
 
 Não executar o commit: essa ação é responsabilidade de Iago.
 

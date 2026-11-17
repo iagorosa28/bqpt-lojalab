@@ -1,34 +1,34 @@
-.app{
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 28px;
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
 }
 
-.status-api{
-    padding: 7px 7px;
-    border: 2px solid black;
-    border-radius: 10px;
-    background-color: bisque;
+.status-api {
+  padding: 7px 7px;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: bisque;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-    gap: 14px;
+  gap: 14px;
 }
 
-.status-carregando{
-    color:darkblue;
+.status-carregando {
+  color: darkblue;
 }
 
-.status-sucesso{
-    color: darkgreen;
+.status-sucesso {
+  color: darkgreen;
 }
 
-.status-erro{
-    color: darkred;
+.status-erro {
+  color: darkred;
 }

@@ -73,11 +73,11 @@ Referência: [proxy do Vite](https://vite.dev/config/server-options.html#server-
 - `src/index.css`: reset básico, fonte e cores gerais da página.
 - `src/App.css`: organização da tela e estilos de cada status.
 
-| Estado | Texto apresentado |
-| --- | --- |
+| Estado       | Texto apresentado  |
+| ------------ | ------------------ |
 | `carregando` | Consultando API... |
-| `sucesso` | API disponível! |
-| `erro` | Falha na consulta |
+| `sucesso`    | API disponível!    |
+| `erro`       | Falha na consulta  |
 
 O bloco de mensagens usa `role="status"` para permitir o anúncio das mudanças
 por leitores de tela. Os estados têm textos distintos e cores escuras sobre
@@ -96,12 +96,12 @@ automáticas nesta etapa.
 
 Na pasta `apps/quem-poupa-tem-web`:
 
-| Comando | Para que serve |
-| --- | --- |
-| `pnpm run dev` | Inicia o servidor de desenvolvimento do Vite. |
-| `pnpm run lint` | Verifica o código com ESLint. |
-| `pnpm run build` | Verifica o TypeScript com `tsc -b` e gera o build em `dist`. |
-| `pnpm run preview` | Serve o build existente para conferência local. |
+| Comando            | Para que serve                                               |
+| ------------------ | ------------------------------------------------------------ |
+| `pnpm run dev`     | Inicia o servidor de desenvolvimento do Vite.                |
+| `pnpm run lint`    | Verifica o código com ESLint.                                |
+| `pnpm run build`   | Verifica o TypeScript com `tsc -b` e gera o build em `dist`. |
+| `pnpm run preview` | Serve o build existente para conferência local.              |
 
 Na raiz, use `pnpm --filter quem-poupa-tem-web run <script>`.
 Gere um novo build após alterar o código antes de usar `preview`.
@@ -119,12 +119,12 @@ pnpm run build
 
 Com o frontend em modo de desenvolvimento, confira no navegador:
 
-| Cenário | Resultado esperado |
-| --- | --- |
-| API ligada e página recarregada | Estado de sucesso e mensagem retornada pela API. |
+| Cenário                            | Resultado esperado                                        |
+| ---------------------------------- | --------------------------------------------------------- |
+| API ligada e página recarregada    | Estado de sucesso e mensagem retornada pela API.          |
 | API desligada e página recarregada | Estado de erro e mensagem básica, sem travar a interface. |
-| API religada e página recarregada | Nova consulta retorna ao estado de sucesso. |
-| Consulta em andamento | Texto de carregamento até a conclusão ou falha. |
+| API religada e página recarregada  | Nova consulta retorna ao estado de sucesso.               |
+| Consulta em andamento              | Texto de carregamento até a conclusão ou falha.           |
 
 Para observar o carregamento, é possível simular uma conexão lenta nas
 ferramentas de desenvolvimento do navegador. Confira também o console com a

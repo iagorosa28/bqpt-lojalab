@@ -1,4 +1,3 @@
-
 # Aplicações
 
 Esta pasta reunirá as aplicações do monorepo:

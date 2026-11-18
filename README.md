@@ -72,13 +72,20 @@ O workflow `CI`, definido em `.github/workflows/ci.yml`, executa automaticamente
 nas Pull Requests destinadas à `main`, incluindo novas alterações enviadas à PR.
 Ele prepara Node.js 24 e a versão do pnpm definida no `package.json`, instala
 as dependências com o lockfile congelado e executa as verificações existentes.
+Também inicia um PostgreSQL 18 temporário, configura a conexão da API e aplica
+`apps/quem-poupa-tem-api/sql/schema.sql` antes dos testes de integração.
+As credenciais do banco temporário são fictícias e definidas no workflow;
+o CI não usa o `.env.test` local. Um push sem PR aberta não dispara esse workflow.
 
 Para acompanhar uma execução, abra a aba **Actions** do repositório e selecione
 o workflow **CI**, ou acesse as verificações na aba **Checks** da PR. Abra o job
 `verificacoes` e expanda uma etapa para consultar seus logs. Se um comando
 falhar, o job fica reprovado e as verificações seguintes são puladas.
 
-Para reproduzir as verificações localmente, execute na raiz do repositório:
+Antes de reproduzir as verificações localmente, prepare o banco
+`quem_poupa_tem_test` e o `.env.test` conforme o
+[README da API](apps/quem-poupa-tem-api/README.md#banco-e-testes-de-integração).
+Depois, execute na raiz do repositório:
 
 ```bash
 pnpm install --frozen-lockfile
@@ -90,7 +97,9 @@ pnpm --filter quem-poupa-tem-api test
 pnpm --filter quem-poupa-tem-api build
 ```
 
-As verificações atuais não exigem PostgreSQL em execução nem arquivo `.env`.
+Os testes de integração do repository exigem PostgreSQL em execução, estrutura
+SQL criada e conexão de testes configurada. O servidor HTTP não precisa estar
+rodando. No GitHub Actions, o próprio workflow prepara o banco temporário.
 Após abrir a PR, confira se todas as etapas do CI terminaram com sucesso no
 GitHub; a validação local não substitui essa conferência.
 

@@ -11,6 +11,28 @@ jobs:
   verificacoes:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: bqpt_app
+          POSTGRES_PASSWORD: senha_ficticia_ci
+          POSTGRES_DB: quem_poupa_tem_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U bqpt_app -d quem_poupa_tem_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DB_HOST: localhost
+      DB_PORT: "5432"
+      DB_NAME: quem_poupa_tem_test
+      DB_USER: bqpt_app
+      DB_PASSWORD: senha_ficticia_ci
+
     steps:
       - name: Obter código do repositório
         uses: actions/checkout@v7
@@ -32,6 +54,16 @@ jobs:
         run: pnpm --filter quem-poupa-tem-web lint
       - name: Compilar frontend
         run: pnpm --filter quem-poupa-tem-web build
+
+      - name: Instalar cliente PostgreSQL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Criar tabelas do banco de testes
+        env:
+          PGPASSWORD: ${{ env.DB_PASSWORD }}
+        run: psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -v ON_ERROR_STOP=1 --single-transaction -f apps/quem-poupa-tem-api/sql/schema.sql
 
       - name: Verificar tipos da API
         run: pnpm --filter quem-poupa-tem-api typecheck

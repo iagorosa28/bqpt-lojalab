@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verificacoes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Obter código do repositório
+        uses: actions/checkout@v7
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+      - name: Configurar pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Instalar dependências
+        run: pnpm install --frozen-lockfile
+
+      - name: Verificar formatação
+        run: pnpm format:check
+
+      - name: Verificar lint do frontend
+        run: pnpm --filter quem-poupa-tem-web lint
+      - name: Compilar frontend
+        run: pnpm --filter quem-poupa-tem-web build
+
+      - name: Verificar tipos da API
+        run: pnpm --filter quem-poupa-tem-api typecheck
+      - name: Executar testes da API
+        run: pnpm --filter quem-poupa-tem-api test
+      - name: Compilar API
+        run: pnpm --filter quem-poupa-tem-api build

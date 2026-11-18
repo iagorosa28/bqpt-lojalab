@@ -66,6 +66,34 @@ Os comandos podem afetar arquivos de ambas as aplicações e a documentação.
 A formatação não substitui lint, verificação de tipos, build ou testes das
 aplicações afetadas.
 
+## Integração contínua (CI)
+
+O workflow `CI`, definido em `.github/workflows/ci.yml`, executa automaticamente
+nas Pull Requests destinadas à `main`, incluindo novas alterações enviadas à PR.
+Ele prepara Node.js 24 e a versão do pnpm definida no `package.json`, instala
+as dependências com o lockfile congelado e executa as verificações existentes.
+
+Para acompanhar uma execução, abra a aba **Actions** do repositório e selecione
+o workflow **CI**, ou acesse as verificações na aba **Checks** da PR. Abra o job
+`verificacoes` e expanda uma etapa para consultar seus logs. Se um comando
+falhar, o job fica reprovado e as verificações seguintes são puladas.
+
+Para reproduzir as verificações localmente, execute na raiz do repositório:
+
+```bash
+pnpm install --frozen-lockfile
+pnpm format:check
+pnpm --filter quem-poupa-tem-web lint
+pnpm --filter quem-poupa-tem-web build
+pnpm --filter quem-poupa-tem-api typecheck
+pnpm --filter quem-poupa-tem-api test
+pnpm --filter quem-poupa-tem-api build
+```
+
+As verificações atuais não exigem PostgreSQL em execução nem arquivo `.env`.
+Após abrir a PR, confira se todas as etapas do CI terminaram com sucesso no
+GitHub; a validação local não substitui essa conferência.
+
 ## Aplicações
 
 - [API do Banco Quem Poupa Tem](apps/quem-poupa-tem-api/README.md): tecnologias, setup do PostgreSQL, configuração do ambiente, conexão, encerramento, comandos e verificações locais.

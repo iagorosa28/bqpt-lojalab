@@ -1,1 +1,16 @@
--- As tabelas serão definidas gradualmente nas próximas funcionalidades.
+CREATE TABLE clientes (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  email VARCHAR(254) NOT NULL UNIQUE
+    CHECK (email = lower(btrim(email))),
+  nome VARCHAR(80) NOT NULL,
+  sobrenome VARCHAR(150) NOT NULL,
+  senha_hash TEXT NOT NULL
+);
+
+CREATE TABLE contas (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  cliente_id BIGINT NOT NULL UNIQUE REFERENCES clientes(id),
+  numero_conta VARCHAR(20) NOT NULL UNIQUE,
+  saldo NUMERIC(18,2) NOT NULL DEFAULT 0 CHECK (saldo >= 0),
+  criado_em TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);

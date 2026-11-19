@@ -3,14 +3,16 @@
 API do BQPT em desenvolvimento, com servidor Express, endpoint de saúde e
 conexão ao PostgreSQL por meio de um pool da biblioteca `pg`. O repository de
 clientes já cadastra cliente e conta em uma transação, com testes de integração.
-O cadastro ainda não está exposto por um endpoint HTTP; service, controller e
-rota dessa funcionalidade permanecem pendentes.
+O service valida e prepara os dados e gera o hash Argon2id, com testes unitários.
+O cadastro ainda não está exposto por um endpoint HTTP; controller, rota e
+tratamento das respostas HTTP dessa funcionalidade permanecem pendentes.
 
 ## Tecnologias
 
 - **Node.js e Express:** execução da aplicação e criação das rotas HTTP.
 - **TypeScript:** código com verificação de tipos.
 - **PostgreSQL e pg:** banco de desenvolvimento e gerenciamento de conexões.
+- **Argon2:** geração do hash Argon2id da credencial recebida pelo service.
 - **tsx:** execução de TypeScript durante o desenvolvimento.
 - **Vitest e Supertest:** execução de testes e simulação de requisições HTTP nos testes.
 
@@ -18,6 +20,10 @@ rota dessa funcionalidade permanecem pendentes.
 
 As dependências são instaladas pela raiz do monorepo, seguindo as
 [instruções do README principal](../../README.md#instalação).
+
+O `pnpm-workspace.yaml` permite o script de instalação do pacote `argon2` em
+`allowBuilds`. Preserve essa configuração e o `pnpm-lock.yaml` ao reproduzir
+o ambiente local ou no CI.
 
 ## PostgreSQL local
 
@@ -182,6 +188,34 @@ conexão para criar cliente e conta entre `BEGIN` e `COMMIT`; em caso de erro,
 executa `ROLLBACK` e relança o erro. Após confirmar a transação, retorna nome,
 sobrenome e número da conta. A conexão é liberada no `finally`.
 
+## Service de cadastro
+
+`src/modules/clientes/clientes.service.ts` exporta `cadastrarCliente`. Antes de
+chamar o repository, a função:
+
+- Confere o objeto recebido, os tipos dos campos e o preenchimento obrigatório.
+- Normaliza o email com `trim().toLowerCase()` e remove espaços das extremidades
+  de nome e sobrenome, preservando os espaços internos.
+- Limita email a 254 caracteres, nome a 80 e sobrenome a 150, considerando os
+  valores preparados, e aplica uma validação básica de formato do email.
+- Exige que o campo `senha` seja uma string hexadecimal de exatamente 64
+  caracteres, sem espaços, aceitando letras maiúsculas e minúsculas. Conforme
+  o contrato definido para o cadastro, esse campo representa a credencial
+  SHA-256 enviada pelo frontend, não a senha original. A validação verifica
+  apenas o formato, sem comprovar como o valor foi produzido.
+- Gera o hash com `argon2.hash`, escolhendo explicitamente Argon2id, e passa
+  somente o hash final como `senhaHash` ao repository.
+
+A função retorna o resultado do repository, com nome, sobrenome e número da
+conta. Erros de validação são lançados como `Error`; falhas do Argon2 e do
+repository são propagadas. A tradução desses erros em respostas HTTP ainda
+será implementada. Não registrar nem retornar a credencial ou o hash.
+
+Os tipos compartilhados ficam em `src/modules/clientes/clientes.types.ts`:
+`DadosCadastroCliente` representa a entrada do service, `DadosCliente` a entrada
+do repository e `ResultadoCadastro` o retorno. Esses tipos não substituem a
+validação dos dados em execução.
+
 ## Banco e testes de integração
 
 Use `quem_poupa_tem_dev` para desenvolvimento e `quem_poupa_tem_test` para os
@@ -225,12 +259,21 @@ não é carregado por esses scripts; no CI, as variáveis são fornecidas pelo j
 
 ### Cobertura e limpeza
 
-Os arquivos ficam em `tests/integration`:
+Os testes estão organizados por foco:
 
-- `health.test.ts`: verifica status e mensagem do endpoint com Supertest, sem
+- `tests/api/health.test.ts`: verifica status e mensagem do endpoint com Supertest, sem
   precisar de banco ou servidor HTTP em uma porta.
-- `clientes.repository.test.ts`: verifica cadastro e persistência de cliente e
+- `tests/integration/clientes.repository.test.ts`: verifica cadastro e persistência de cliente e
   conta, rejeição de email duplicado e rollback se a criação da conta falhar.
+- `tests/unit/clientes.service.test.ts`: verifica o fluxo de sucesso, normalização,
+  entradas inválidas, limites, formatos e propagação de erros. O repository e o
+  Argon2 são substituídos por mocks; esses testes não acessam o PostgreSQL nem
+  calculam hashes reais. Os casos semelhantes são agrupados com `test.each`, e
+  os mocks são reinicializados e configurados antes de cada teste.
+
+Os testes unitários verificam a coordenação do service com as dependências;
+não comprovam a integração com a implementação real do Argon2. Os testes de
+integração existentes exercitam o repository com PostgreSQL real.
 
 O teste do repository confirma o nome do banco na configuração e na conexão
 real antes das gravações. Após cada teste, remove contas e clientes associados
@@ -248,6 +291,18 @@ Para executar apenas o arquivo do repository, na pasta da API:
 
 ```powershell
 pnpm run test tests/integration/clientes.repository.test.ts
+```
+
+Para executar apenas os testes unitários do service, sem precisar de PostgreSQL:
+
+```powershell
+pnpm run test tests/unit/clientes.service.test.ts
+```
+
+Para executar apenas o teste HTTP de saúde:
+
+```powershell
+pnpm run test tests/api/health.test.ts
 ```
 
 ## Verificações locais

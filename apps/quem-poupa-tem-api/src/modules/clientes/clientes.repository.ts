@@ -1,17 +1,5 @@
 import { pool } from "../../db/pool.js";
-
-type DadosCliente = {
-  email: string;
-  nome: string;
-  sobrenome: string;
-  senhaHash: string;
-};
-
-type ResultadoCadastro = {
-  nome: string;
-  sobrenome: string;
-  numeroConta: string;
-};
+import type { DadosCliente, ResultadoCadastro } from "./clientes.types.js";
 
 async function registrarCliente(
   dados: DadosCliente,

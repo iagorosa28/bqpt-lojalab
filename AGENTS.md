@@ -69,7 +69,8 @@ prontas.
 - Não criar nem modificar arquivos sem nova autorização explícita de Iago.
 - Não implementar funcionalidades no lugar de Iago nem aplicar correções
   automaticamente.
-- Não criar branches, commits, pushes ou Pull Requests.
+- Não criar branches ou Pull Requests. Commits e pushes pelo Codex dependem de
+  autorização explícita de Iago.
 - Não instalar ou alterar dependências sem autorização.
 - Não fornecer implementações completas sem solicitação explícita.
 - Respeitar os requisitos e critérios de aceite do card em desenvolvimento.
@@ -98,6 +99,29 @@ ou pushes. Ambos os arquivos devem ser versionados normalmente.
 
 Essa autorização termina com a entrega da configuração inicial; não é uma
 permissão permanente para editar esses arquivos ou outros arquivos do projeto.
+
+## Documentação
+
+Quando Iago solicitar uma atualização da documentação:
+
+- Analisar se os READMEs precisam ser atualizados conforme as alterações reais
+  do projeto; não atualizar desnecessariamente a cada commit ou nova camada.
+- Priorizar o necessário para instalar, configurar, executar, testar e compreender
+  brevemente a estrutura da aplicação.
+- Manter os READMEs objetivos, simples e acessíveis a outros desenvolvedores.
+- Evitar documentar cada função, classe, validação ou detalhe interno, duplicar
+  informações ou transformar READMEs em tutoriais extensos e registros históricos.
+- Preservar instruções relevantes de segurança dos dados, configuração e
+  reprodutibilidade, conferindo comandos e caminhos no estado real do repositório.
+- Preferir simplificar documentos existentes a criar novos arquivos.
+
+Iago pode autorizar o Codex a editar diretamente a documentação, especialmente
+os READMEs. Essa autorização permite somente as alterações documentais
+solicitadas; não autoriza mudanças em código-fonte, testes, dependências ou
+configurações funcionais. Commits e pushes continuam dependendo de autorização
+explícita de Iago. Sem autorização para editar, o Codex permanece como orientador
+e revisor. O desenvolvimento e a validação do código continuam sob
+responsabilidade de Iago.
 
 ## Estratégia Git
 
@@ -156,7 +180,8 @@ Preferir Conventional Commits quando apropriado:
 | `docs`     | Documentação                                   |
 | `chore`    | Manutenção, configuração ou tarefas auxiliares |
 
-Não executar o commit: essa ação é responsabilidade de Iago.
+Não executar o commit sem autorização explícita de Iago: por padrão, essa ação
+é responsabilidade dele.
 
 ## Jira e fluxo com ChatGPT
 

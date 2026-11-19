@@ -1,94 +1,53 @@
-# bqpt-lojalab
+# BQPT + LojaLab
 
-Monorepo de estudos que reúne dois sistemas fictícios, Banco Quem Poupa Tem e LojaLab, desenvolvidos de forma independente e posteriormente integrados por APIs para simular pagamentos.
+Monorepo de estudos full-stack em TypeScript com dois sistemas fictícios:
+Banco Quem Poupa Tem (BQPT) e LojaLab. A integração futura permitirá pagamentos
+simulados, sem dinheiro ou serviços financeiros reais.
 
-## Preparação do ambiente
+## Aplicações
 
-### Ferramentas utilizadas
+| Aplicação     | Stack                                         | Documentação                                               |
+| ------------- | --------------------------------------------- | ---------------------------------------------------------- |
+| BQPT API      | Node.js, Express, PostgreSQL com `pg`, Argon2 | [Configuração e testes](apps/quem-poupa-tem-api/README.md) |
+| BQPT frontend | React, Vite e TypeScript                      | [Execução local](apps/quem-poupa-tem-web/README.md)        |
 
-- Node.js
-- pnpm
+A LojaLab será desenvolvida separadamente, com React + Vite e uma API Express
+com MongoDB + Mongoose. As aplicações ficam em `apps/`, gerenciadas por pnpm
+Workspaces. Cada README contém as instruções específicas da aplicação.
 
-Configuração inicial testada com Node.js 24.22.2 e pnpm 11.25.0.
+## Instalação
 
-### Instalação
+Pré-requisitos: Node.js 24 e pnpm na versão definida em `package.json`
+(`packageManager`). Para a API BQPT, prepare também o PostgreSQL conforme seu README.
 
-Na raiz do repositório, execute:
+Na raiz do repositório:
 
-```bash
-pnpm install
-```
-
-Para instalar as dependências sem alterar o arquivo
-`pnpm-lock.yaml`, utilize:
-
-```bash
+```powershell
 pnpm install --frozen-lockfile
 ```
 
-O projeto utiliza pnpm Workspaces para organizar
-as aplicações em um único monorepo.
+Preserve `pnpm-lock.yaml` e as permissões de instalação em `pnpm-workspace.yaml`.
+Não versione senhas, tokens ou arquivos de ambiente locais; use os arquivos
+`.env*.example` como referência, mantendo-os sem segredos.
 
-### Comandos do workspace
+## Comandos
 
-Para listar os projetos que fazem parte do monorepo:
+Execute na raiz:
 
-```bash
-pnpm run workspace:list
-```
+| Comando                                | Finalidade                                  |
+| -------------------------------------- | ------------------------------------------- |
+| `pnpm run workspace:list`              | Listar os projetos do workspace.            |
+| `pnpm --filter quem-poupa-tem-api dev` | Iniciar a API após preparar seu ambiente.   |
+| `pnpm --filter quem-poupa-tem-web dev` | Iniciar o frontend.                         |
+| `pnpm format:check`                    | Conferir a formatação do monorepo.          |
+| `pnpm format`                          | Aplicar formatação; conferir o diff depois. |
 
-O comando utiliza `pnpm -r list --depth -1` para exibir os projetos sem suas dependências.
+## Verificações e CI
 
-As aplicações ficam na pasta `apps/`.
+Prepare o [banco de testes da API](apps/quem-poupa-tem-api/README.md#banco-de-testes)
+antes de executar a suíte completa. Na raiz:
 
-**Observação:** os comandos e a preparação do ambiente de cada aplicação
-estão documentados em seu próprio README.
-
-### Formatação do código
-
-O monorepo utiliza Prettier como dependência de desenvolvimento da raiz.
-A configuração compartilhada em `.prettierrc.json` define indentação de
-dois espaços, sem caracteres de tabulação.
-
-Execute os comandos abaixo na raiz do repositório:
-
-| Comando             | Para que serve                                                            |
-| ------------------- | ------------------------------------------------------------------------- |
-| `pnpm format`       | Aplica a formatação aos arquivos compatíveis e não ignorados do monorepo. |
-| `pnpm format:check` | Confere a formatação sem modificar os arquivos.                           |
-
-O arquivo `.prettierignore` exclui builds, cobertura e `pnpm-lock.yaml` da
-formatação. O Prettier também ignora `node_modules` por padrão e, quando
-executado na raiz, respeita o `.gitignore` desse diretório.
-
-Depois de aplicar a formatação, confira o diff e execute `pnpm format:check`.
-Os comandos podem afetar arquivos de ambas as aplicações e a documentação.
-A formatação não substitui lint, verificação de tipos, build ou testes das
-aplicações afetadas.
-
-## Integração contínua (CI)
-
-O workflow `CI`, definido em `.github/workflows/ci.yml`, executa automaticamente
-nas Pull Requests destinadas à `main`, incluindo novas alterações enviadas à PR.
-Ele prepara Node.js 24 e a versão do pnpm definida no `package.json`, instala
-as dependências com o lockfile congelado e executa as verificações existentes.
-Também inicia um PostgreSQL 18 temporário, configura a conexão da API e aplica
-`apps/quem-poupa-tem-api/sql/schema.sql` antes dos testes de integração.
-As credenciais do banco temporário são fictícias e definidas no workflow;
-o CI não usa o `.env.test` local. Um push sem PR aberta não dispara esse workflow.
-
-Para acompanhar uma execução, abra a aba **Actions** do repositório e selecione
-o workflow **CI**, ou acesse as verificações na aba **Checks** da PR. Abra o job
-`verificacoes` e expanda uma etapa para consultar seus logs. Se um comando
-falhar, o job fica reprovado e as verificações seguintes são puladas.
-
-Antes de reproduzir as verificações localmente, prepare o banco
-`quem_poupa_tem_test` e o `.env.test` conforme o
-[README da API](apps/quem-poupa-tem-api/README.md#banco-e-testes-de-integração).
-Depois, execute na raiz do repositório:
-
-```bash
-pnpm install --frozen-lockfile
+```powershell
 pnpm format:check
 pnpm --filter quem-poupa-tem-web lint
 pnpm --filter quem-poupa-tem-web build
@@ -97,13 +56,10 @@ pnpm --filter quem-poupa-tem-api test
 pnpm --filter quem-poupa-tem-api build
 ```
 
-Os testes de integração do repository exigem PostgreSQL em execução, estrutura
-SQL criada e conexão de testes configurada. O servidor HTTP não precisa estar
-rodando. No GitHub Actions, o próprio workflow prepara o banco temporário.
-Após abrir a PR, confira se todas as etapas do CI terminaram com sucesso no
-GitHub; a validação local não substitui essa conferência.
+O workflow `.github/workflows/ci.yml` executa essas verificações nas PRs para
+`main` e em novos pushes nas branches dessas PRs. Um push sem PR aberta não
+dispara o workflow. O CI prepara um PostgreSQL 18 temporário, aplica o esquema
+e fornece as variáveis de conexão, sem usar os arquivos `.env` locais.
 
-## Aplicações
-
-- [API do Banco Quem Poupa Tem](apps/quem-poupa-tem-api/README.md): tecnologias, setup do PostgreSQL, configuração do ambiente, conexão, encerramento, comandos e verificações locais.
-- [Frontend do Banco Quem Poupa Tem](apps/quem-poupa-tem-web/README.md): React e Vite, execução local, proxy da API, estados da interface, comandos e verificações locais.
+Confira o resultado na aba **Checks** da PR ou **Actions** do repositório.
+A validação local não substitui a execução bem-sucedida do CI.

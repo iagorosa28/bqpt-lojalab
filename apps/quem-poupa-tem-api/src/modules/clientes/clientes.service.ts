@@ -1,4 +1,5 @@
 import * as argon2 from "argon2";
+import { ErroValidacao } from "../../errors/erro-validacao.js";
 import { registrarCliente } from "./clientes.repository.js";
 import type {
   DadosCadastroCliente,
@@ -9,20 +10,20 @@ async function cadastrarCliente(
   dados: DadosCadastroCliente,
 ): Promise<ResultadoCadastro> {
   if (typeof dados !== "object" || dados === null || Array.isArray(dados)) {
-    throw new Error("Os dados do cadastro devem ser um objeto.");
+    throw new ErroValidacao("Os dados do cadastro devem ser um objeto.");
   }
 
   if (typeof dados.email !== "string" || dados.email.trim().length === 0) {
-    throw new Error("E-mail é obrigatório e deve ser um texto.");
+    throw new ErroValidacao("E-mail é obrigatório e deve ser um texto.");
   }
   if (typeof dados.nome !== "string" || dados.nome.trim().length === 0) {
-    throw new Error("Nome é obrigatório e deve ser um texto.");
+    throw new ErroValidacao("Nome é obrigatório e deve ser um texto.");
   }
   if (
     typeof dados.sobrenome !== "string" ||
     dados.sobrenome.trim().length === 0
   ) {
-    throw new Error("Sobrenome é obrigatório e deve ser um texto.");
+    throw new ErroValidacao("Sobrenome é obrigatório e deve ser um texto.");
   }
   if (
     typeof dados.senha !== "string" ||
@@ -32,7 +33,7 @@ async function cadastrarCliente(
      * Ele retorna um booleano.
      */
   ) {
-    throw new Error(
+    throw new ErroValidacao(
       "A credencial deve conter exatamente 64 caracteres hexadecimais.",
     );
   }
@@ -42,18 +43,18 @@ async function cadastrarCliente(
   const sobrenome = dados.sobrenome.trim();
 
   if (emailNormalizado.length > 254) {
-    throw new Error("E-mail deve ter no máximo 254 caracteres.");
+    throw new ErroValidacao("E-mail deve ter no máximo 254 caracteres.");
   }
   if (nome.length > 80) {
-    throw new Error("Nome deve ter no máximo 80 caracteres.");
+    throw new ErroValidacao("Nome deve ter no máximo 80 caracteres.");
   }
   if (sobrenome.length > 150) {
-    throw new Error("Sobrenome deve ter no máximo 150 caracteres.");
+    throw new ErroValidacao("Sobrenome deve ter no máximo 150 caracteres.");
   }
 
   const formatoEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!formatoEmail.test(emailNormalizado)) {
-    throw new Error("E-mail inválido.");
+    throw new ErroValidacao("E-mail inválido.");
   }
 
   const senhaHash = await argon2.hash(dados.senha, {

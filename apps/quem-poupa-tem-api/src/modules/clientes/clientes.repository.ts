@@ -1,4 +1,6 @@
+import { DatabaseError } from "pg";
 import { pool } from "../../db/pool.js";
+import { ErroEmailDuplicado } from "./clientes.errors.js";
 import type { DadosCliente, ResultadoCadastro } from "./clientes.types.js";
 
 async function registrarCliente(
@@ -30,6 +32,15 @@ async function registrarCliente(
     };
   } catch (erro) {
     await client.query("ROLLBACK");
+
+    if (
+      erro instanceof DatabaseError &&
+      erro.code === "23505" && // identifica violação de unicidade.
+      erro.constraint === "clientes_email_key"
+    ) {
+      throw new ErroEmailDuplicado();
+    }
+
     throw erro;
   } finally {
     client.release();

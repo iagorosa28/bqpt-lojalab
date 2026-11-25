@@ -1,6 +1,7 @@
 import { afterAll, afterEach, beforeAll, expect, test } from "vitest";
 import { pool } from "../../src/db/pool.js";
 import { registrarCliente } from "../../src/modules/clientes/clientes.repository.js";
+import { ErroEmailDuplicado } from "../../src/modules/clientes/clientes.errors.js";
 
 function criarDadosCliente() {
   return {
@@ -96,9 +97,9 @@ test("Deve rejeitar email duplicado e preservar o cadastro original.", async () 
 
   const resultado = await registrarCliente(dados);
 
-  await expect(registrarCliente(dados)).rejects.toMatchObject({
-    code: "23505", // Violação de unicidade
-  });
+  await expect(registrarCliente(dados)).rejects.toBeInstanceOf(
+    ErroEmailDuplicado,
+  );
 
   const consultaId = await pool.query(
     "SELECT id FROM clientes WHERE email = $1",

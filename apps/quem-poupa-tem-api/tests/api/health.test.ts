@@ -2,7 +2,7 @@
 
 import { test, expect } from "vitest";
 import request from "supertest";
-import { app } from "../src/app.js";
+import { app } from "../../src/app.js";
 
 test("deve responder com status 200", async () => {
   const resposta = await request(app).get("/health");

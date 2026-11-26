@@ -1,0 +1,92 @@
+.cadastro-form {
+  width: min(90%, 380px);
+  background-color: lightblue;
+  padding: 7px 7px;
+  border: 2px solid black;
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cadastro-form div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 7px;
+}
+
+.cadastro-form label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.cadastro-form input {
+  width: 80%;
+  padding: 6px;
+  border-radius: 10px;
+  border: 2px solid #333;
+  background-color: white;
+}
+
+.cadastro-form input:focus {
+  outline: 2px solid darkblue;
+}
+
+.cadastro-form input:hover:not(:focus) {
+  outline: 2px solid blue;
+  outline-offset: 2px;
+}
+
+.cadastro-form button {
+  padding: 6px;
+  border-radius: 10px;
+  border: 2px solid #333;
+  background-color: lightyellow;
+  color: black;
+  font-weight: 600;
+  font-size: 1.05rem;
+
+  cursor: pointer;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.cadastro-form button:hover,
+.cadastro-form button:focus-visible {
+  background-color: yellow;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 4px rgb(0 0 0 / 100%);
+}
+
+.cadastro-form button:hover {
+  color: blue;
+  outline: 2px solid blue;
+  outline-offset: 2px;
+}
+
+.cadastro-form button:focus-visible {
+  color: darkblue;
+  outline: 2px solid darkblue;
+}
+
+.cadastro-form .campo-com-erro label {
+  color: red;
+}
+
+.cadastro-form .campo-com-erro input {
+  border-color: red;
+}
+
+.cadastro-erro {
+  color: darkred;
+  font-weight: 600;
+  margin-top: 7px;
+  margin-bottom: 7px;
+}

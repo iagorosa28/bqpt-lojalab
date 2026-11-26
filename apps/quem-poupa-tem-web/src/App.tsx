@@ -1,6 +1,7 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import { consultarHealth } from "./services/health";
+import CadastroForm from "./features/cadastro/CadastroForm";
 
 type EstadoConsulta = "carregando" | "sucesso" | "erro";
 
@@ -51,6 +52,7 @@ function App() {
         <p className={`status-${status}`}>{textoStatus[status]}</p>
         <p>{mensagem}</p>
       </div>
+      <CadastroForm />
     </main>
   );
 }
